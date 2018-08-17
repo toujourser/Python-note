@@ -238,13 +238,6 @@ print(d)
 
 
 
-
-
-
-
-
-
-
 ### 数字重复统计
     # 随机产生100个整数
     # 数字的范围[-1000,1000]
@@ -320,14 +313,5 @@ print(sorted(d.items(),reverse=True))
 import string,random
 ['{:0>4}.{}'.format(i,''.join(random.sample(string.ascii_lowercase, 10))) for i in range(1,100)]
 ['{:0>4}.{}'.format(i,"".join(random.choices(string.ascii_lowercase,k=10))) for i in range(1,100)]
-
-
-
-
-
-
-
-
-
 
 
