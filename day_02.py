@@ -198,8 +198,87 @@ for i in range(1,10):
 
 
 
+### 给定一个3*3方阵，求转置矩阵
+# 1 2 3       1 4 7
+# 4 5 6   =>  2 5 8
+# 7 8 9       3 6 9
+
+# No1.
+lst = [[1,2,3],[4,5,6],[7,8,9]]
+length = len(lst)
+for i in range(length):
+    for j in range(i):
+        lst[i][j],lst[j][i] = lst[j][i],lst[i][j]
+print(lst)
+
+# No2.
+lst = [[1,2,3],[4,5,6],[7,8,9]]
+print(lst)
+length = len(lst)
+for i in range(length):
+    for j in range(length):
+        if i < j:
+            break
+        else:
+            lst[i][j],lst[j][i] =  lst[j][i],lst[i][j]
+print(lst)
 
 
 
 
+### 给定一个矩阵，求其转置矩阵
+# 1 2 3            1 4
+# 4 5 6   <==>     2 5
+#                  3 6
 
+# No1.   一次性开辟空间
+lst = [[1,2,3],[4,5,6]]
+print(lst)
+length = len(lst)
+nlst = [[],[],[]]
+for i in range(length+1):
+    for j in range(length):
+        nlst[i].append(lst[j][i])
+print(nlst)
+
+# No1.1
+lst = [[1,2,3],[4,5,6]]
+length = len(lst)
+nlst = [[0 for i in range(length)] for j in range(lst[0])]
+for i in range(len(nlst)):
+    for j in range(len(nlst[0])):
+        nlst[i][j] = lst[j][i]
+print(nlst)
+
+
+# No2.
+lst = [[1,2,3],[4,5,6]]
+nlst2 = []
+for i in zip(lst[0], lst[1]):
+    nlst2.append(i)
+print(nlst2)
+
+# No2.2
+list(zip(lst[0],lst[1]))
+
+
+# No3.
+lst = [[1,2,3],[4,5,6]]
+length = len(lst)
+nlst = [[],[],[]]
+print(lst)
+for i in lst:
+    for j,col in enumerate(i):
+        nlst[j].append(col)
+print(nlst)
+
+
+# No4.
+lst = [[1,2,3],[4,5,6]]
+length = len(lst)
+nlst = [[0 for i in range(length)] for j in range(len(lst[0]))]
+
+for i,row in enumerate(nlst):
+    for j,col in enumerate(lst):
+        nlst[i][j] = lst[j][i]
+print(nlst)
