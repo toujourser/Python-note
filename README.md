@@ -1,3 +1,3 @@
 # Python-note
 Python 学习笔记
-长期更新
+持续更新
