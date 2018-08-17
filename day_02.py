@@ -186,7 +186,12 @@ for i in range(1,10):
 
 
 
+### 列表解析式实习九九乘法表
+# No1.
+[[print('{}*{}={}{}'.format(i,j,i*j,'\n' if i == j else ' '),end='')] for i in range(1,10) for j in range(1,i+1) ]
 
+# No2.
+[[print('{}*{}={:<3}'.format(i,j,i*j), end='\n' if i == j else '')] for i in range(1,10) for j in range(1,i+1) ]
 
 
 
