@@ -1,0 +1,308 @@
+﻿编程题
+1、求和
+对下面集合中随机取数字，要求取出的数字是3的倍数但不能是4的倍数，成功取到10个数字并对取到的所有数字求和输出
+{5,10,3,8,6,10,9,15,24,30,27,48,24}
+
+```
+import random
+lst = list({5,10,3,8,6,10,9,15,24,30,27,48,24})
+nlst = []
+for i in random.choices(lst,k=10):
+    if i % 3 == 0 and i % 4 != 0:
+        nlst.append(i)
+print(sum(nlst))
+
+```
+
+
+
+
+
+2、选取文件
+选出含有ftp的链接，且文件类型是gz或者xz的文件，要求打印其文件名，文件名升序排列
+ftp://ftp.astron.com/pub/file/file-5.14.tar.gz
+ftp://ftp.gmplib.org/pub/gmp-5.1.2/gmp-5.1.2.tar.xz
+ftp://ftp.vim.org/pub/vim/unix/vim-7.3.tar.bz2
+http://anduin.linuxfromscratch.org/sources/LFS/lfs-packages/conglomeration//iana-etc/iana-etc-2.30.tar.bz2
+http://anduin.linuxfromscratch.org/sources/other/udev-lfs-205-1.tar.bz2
+http://download.savannah.gnu.org/releases/libpipeline/libpipeline-1.2.4.tar.gz
+http://download.savannah.gnu.org/releases/man-db/man-db-2.6.5.tar.xz
+http://download.savannah.gnu.org/releases/sysvinit/sysvinit-2.88dsf.tar.bz2
+http://ftp.altlinux.org/pub/people/legion/kbd/kbd-1.15.5.tar.gz
+http://mirror.hust.edu.cn/gnu/autoconf/autoconf-2.69.tar.xz
+http://mirror.hust.edu.cn/gnu/automake/automake-1.14.tar.xz
+
+```
+urllst = ['ftp://ftp.astron.com/pub/file/file-5.14.tar.gz','ftp://ftp.gmplib.org/pub/gmp-5.1.2/gmp-5.1.2.tar.xz','ftp://ftp.vim.org/pub/vim/unix/vim-7.3.tar.bz2','http://anduin.linuxfromscratch.org/sources/LFS/lfs-packages/conglomeration//iana-etc/iana-etc-2.30.tar.bz2','http://anduin.linuxfromscratch.org/sources/other/udev-lfs-205-1.tar.bz2','http://download.savannah.gnu.org/releases/libpipeline/libpipeline-1.2.4.tar.gz','http://download.savannah.gnu.org/releases/man-db/man-db-2.6.5.tar.xz','http://download.savannah.gnu.org/releases/sysvinit/sysvinit-2.88dsf.tar.bz2','http://ftp.altlinux.org/pub/people/legion/kbd/kbd-1.15.5.tar.gz','http://mirror.hust.edu.cn/gnu/autoconf/autoconf-2.69.tar.xz','http://mirror.hust.edu.cn/gnu/automake/automake-1.14.tar.xz']
+choicefile = []
+for i in urllst:
+    if 'ftp' in i:
+        if i.endswith('gz') or i.endswith('xz'):
+            choicefile.append(i.rsplit('/')[-1])
+choicefile.sort()
+print(choicefile)
+```
+
+3、转置矩阵
+随机生成4*4的方阵所有数据，打印出来
+在此矩阵上求转置矩阵并打印出来
+
+```
+import random
+square = [[] for i in range(4)]
+for i in range(4):
+    for j in range(4):
+        square[i].append(random.randint(1,9))
+print(square)
+
+length = len(square)
+for i in range(length):
+    for j in range(i):
+        square[i][j],square[j][i] = square[j][i],square[i][j]
+print(square)
+
+```
+
+
+
+4、生成随机的20个ID
+ID格式要求：
+时间戳_三位随机数字号码_8位随机小写字母
+1506571959_089_xxkeabef
+
+datetime.datetime.now().timestamp() 返回的是时间戳，但是带微秒
+
+```
+import datetime,random,string,time
+for i in range(20):
+    time_stamp = str(int(datetime.datetime.now().timestamp()))
+    time.sleep(0.1)
+    chars = "".join(random.choices(string.ascii_lowercase,k=8))
+    nums = "".join(random.choices('0123456789',k=3))
+    id_ = time_stamp+'_'+ nums +'_'+ chars
+    print(id_)
+```
+
+5、去除重复数字
+[29, 30, 37, 22, 59, 75, 79, 41, 61, 75, 75, 78, 63, 52, 44, 20, 27, 29, 48, 66, 60, 36, 67, 73, 41, 54, 66, 46, 74, 47, 61, 23, 38, 61, 51, 55, 48, 59, 28, 68, 65, 74, 73, 58, 29, 31, 53, 31, 61, 22, 44, 33, 21, 41, 21, 35, 32, 59, 76, 32, 45, 78, 29, 65, 76, 70, 54, 22, 32, 52, 62, 42, 41, 73, 72, 64, 56, 50, 40, 64, 41, 47, 68, 73, 27, 69, 64, 21, 78, 57, 61, 27, 27, 66, 23, 21, 53, 40, 28, 64]
+数字在上面的列表中，要得到一个没有重复数字的升序列表
+
+要求使用2种方法完成：
+1、使用集合完成去重
+```
+nums = [29, 30, 37, 22, 59, 75, 79, 41, 61, 75, 75, 78, 63, 52, 44, 20, 27, 29, 48, 66, 60, 36, 67, 73, 41, 54, 66, 46, 74, 47, 61, 23, 38, 61, 51, 55, 48, 59, 28, 68, 65, 74, 73, 58, 29, 31, 53, 31, 61, 22, 44, 33, 21, 41, 21, 35, 32, 59, 76, 32, 45, 78, 29, 65, 76, 70, 54, 22, 32, 52, 62, 42, 41, 73, 72, 64, 56, 50, 40, 64, 41, 47, 68, 73, 27, 69, 64, 21, 78, 57, 61, 27, 27, 66, 23, 21, 53, 40, 28, 64]
+lst = list(set(nums))
+lst.sort()
+print(lst)
+```
+
+2、只使用列表完成去重，不使用set或者dict（有能力选做）
+```
+nums = [29, 30, 37, 22, 59, 75, 79, 41, 61, 75, 75, 78, 63, 52, 44, 20, 27, 29, 48, 66, 60, 36, 67, 73, 41, 54, 66, 46, 74, 47, 61, 23, 38, 61, 51, 55, 48, 59, 28, 68, 65, 74, 73, 58, 29, 31, 53, 31, 61, 22, 44, 33, 21, 41, 21, 35, 32, 59, 76, 32, 45, 78, 29, 65, 76, 70, 54, 22, 32, 52, 62, 42, 41, 73, 72, 64, 56, 50, 40, 64, 41, 47, 68, 73, 27, 69, 64, 21, 78, 57, 61, 27, 27, 66, 23, 21, 53, 40, 28, 64]
+nlst = []
+for i in nums:
+    if i in nlst:
+        continue
+    else:
+        nlst.append(i)
+nlst.sort()
+print(nlst)
+```
+
+
+6、排序
+375 3.5 6 20 9 -20 68
+对上面的数字实现冒泡排序
+```
+lst = [375, 3.5, 6, 20, 9, -20, 68]
+length = len(lst)
+for i in range(length):
+    flag = False
+    for j in range(length-1-i):
+        if lst[j] > lst[j+1]:
+            lst[j],lst[j+1] = lst[j+1],lst[j]
+            flag = True
+    if not flag:
+        break
+print(lst)
+
+```
+
+7、第6题实现选择排序
+```
+lst = [375, 3.5, 6, 20, 9, -20, 68]
+length = len(lst)
+for i in range(length):
+    maxindex = i
+    for j in range(i+1,length):
+        if lst[j] > lst[maxindex]:
+            maxindex = j
+    if i != maxindex:
+        lst[i],lst[maxindex] = lst[maxindex],lst[i]
+print(lst)
+```
+
+
+8、判断密码强弱
+要求密码必须由 10-15位 指定字符组成：
+十进制数字
+大写字母
+小写字母
+下划线
+要求四种类型的字符都要出现才算合法的强密码
+例如：Aatb32_67mnq，其中包含大写字母、小写字母、数字和下划线，是合格的强密码
+
+```
+import string
+
+n = input('>>>')
+# n = 'Aatb32_67mnq'
+length = len(n)
+
+if length >= 10 and length <= 15:
+    for k in '0123456789':
+        if k in n:
+            for i in string.ascii_lowercase:
+                if i in n:
+                    for j in string.ascii_uppercase:
+                        if j in n:
+                            if '_' in n:
+                                print('合格')
+                            break
+                    break
+            break
+```
+
+
+9、日志统计
+状态200的不同jsp页面访问次数
+统计不同类型文件的访问次数，文件类型有静态类（js、css）、图片类（jpg、jpeg、gif、png）、动态类(action、jsp、do)
+日志如下：
+116.226.208.136 - - [28/Apr/2015:09:01:38 +0800] "GET /js/check.js HTTP/1.1" 304 -
+59.53.22.67 - - [28/Apr/2015:09:01:38 +0800] "GET /jquery/jquery.datepick.css HTTP/1.1" 304 -
+117.93.56.165 - - [28/Apr/2015:09:01:38 +0800] "GET /jquery/jquery-1.4.2.js HTTP/1.1" 304 -
+106.39.189.200 - - [28/Apr/2015:09:01:38 +0800] "GET /jquery/jquery.datepick.js HTTP/1.1" 304 -
+219.146.71.17 - - [28/Apr/2015:09:01:38 +0800] "GET /jquery/jquery.datepick-zh-CN.js HTTP/1.1" 304 -
+111.11.83.162 - - [28/Apr/2015:09:01:38 +0800] "GET /images/shim.gif HTTP/1.1" 304 -
+117.93.56.165 - - [28/Apr/2015:09:01:38 +0800] "GET /images/button_ok.gif HTTP/1.1" 304 -
+111.206.221.200 - - [28/Apr/2015:09:01:38 +0800] "GET /images/button_cancel.gif HTTP/1.1" 304 -
+112.80.144.85 - - [28/Apr/2015:09:01:46 +0800] "GET /user/list.jsp HTTP/1.1" 200 7644
+117.148.200.56 - - [28/Apr/2015:09:01:46 +0800] "GET /images/i_edit.gif HTTP/1.1" 304 -
+183.12.49.80 - - [28/Apr/2015:09:01:46 +0800] "GET /images/i_del.gif HTTP/1.1" 304 -
+175.19.57.147 - - [28/Apr/2015:09:01:46 +0800] "GET /images/button_view.gif HTTP/1.1" 304 -
+117.136.63.218 - - [28/Apr/2015:09:05:46 +0800] "GET /user/list.jsp HTTP/1.1" 200 7644
+157.55.39.102 - - [28/Apr/2015:09:05:56 +0800] "GET /login.jsp HTTP/1.1" 200 2607
+111.206.221.68 - - [28/Apr/2015:09:05:58 +0800] "POST /user_login.action HTTP/1.1" 200 2809
+117.93.56.165 - - [28/Apr/2015:09:06:12 +0800] "POST /user_login.action HTTP/1.1" 302 -
+223.98.218.205 - - [28/Apr/2015:09:06:12 +0800] "GET /login/home.jsp HTTP/1.1" 200 743
+117.136.97.78 - - [28/Apr/2015:09:06:12 +0800] "GET /login/welcome.jsp HTTP/1.1" 200 1142
+111.206.221.68 - - [28/Apr/2015:09:06:12 +0800] "GET /login.jsp HTTP/1.1" 200 803
+117.93.56.165 - - [28/Apr/2015:09:06:12 +0800] "GET /login/top.jsp HTTP/1.1" 200 2052
+111.206.221.68 - - [28/Apr/2015:09:06:13 +0800] "GET /login.jsp HTTP/1.1" 200 1113
+
+```
+
+count = 0
+length = len(log)
+for i in range(length):
+    if log[i].rfind('200',20) != -1 and log[i].rfind('jsp',20) != -1:
+        count += 1
+        print(log[i])
+print('状态200的不同jsp页面访问次数',count)
+
+
+
+
+count_static = 0
+count_img = 0
+count_dynamic = 0
+
+length = len(log)
+for i in range(length):
+    for j in ['.js','.css']:
+        if log[i].rfind(j) != -1 and '.jsp' not in log[i]:
+            # print(log[i])
+            count_static += 1
+
+    for x in ['.jpg','.jpeg','.gif','.png']:
+        if log[i].rfind(x) != -1:
+            # print(log[i])
+            count_img += 1
+
+    for y in ['.action','.jsp','.do']:
+        if log[i].rfind(y) != -1:
+            # print(log[i])
+            count_dynamic += 1
+
+print(' 静态类（js、css）:',count_static, '\n','图片类（jpg、jpeg、gif、png）:',count_img,'\n','动态类(action、jsp、do):',count_dynamic)
+
+
+```
+
+
+
+
+
+
+10、打印矩阵外圈
+1   2   6   7
+3   5   8   13
+4   9   12  14
+10  11  15  16
+打印顺序为1,2,6,7,13,14,16,15,11,10,4,3
+
+
+```
+lst = [[1,2,6,7],[3,5,8,13],[4,9,12,14],[10,11,15,16]]
+nlst = []
+length = len(lst)
+for i in range(length):
+    for j in range(length-1):
+        nlst.append(lst[i][j])
+
+    for x in range(length):      # 使用上一次循环中的 j = 2
+        nlst.append(lst[x][j+1])
+
+    for y in range(length-2,-1,-1):   # 使用上一次循环中的 x = 3
+        nlst.append(lst[x][y])
+
+    for z in range(length-2,0,-1): # 使用上个循环中的 y = 0
+        nlst.append(lst[z][y])
+
+    else:
+        break
+print(nlst)
+
+```
+
+
+
+
+挑战题：
+打印矩阵元素
+1   2   6   7
+3   5   8   13
+4   9   12  14
+10  11  15  16
+之字形打印结果为1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16
+
+```
+x = [[1,2,6,7],[3,5,8,13],[4,9,12,14],[10,11,15,16]]
+lst = []
+for z in range(7):
+    for i in range(4):
+        for j in range(4):
+            if i + j == z:
+                lst.append(x[i][j])
+print(lst)
+```
+
+
+
+答案要求
+每题的答案请使用附加在题目后面，运行结果截图编号，例如01.jpg对应第一题答案截图
+
+答案发至 \\ip\exam
+创建答案目录
+目录名：学号姓名+拼音缩写
+目录创建好之后，把答案文本及运行结果截图。所有文件名、目录名不要用中文和中文符号
